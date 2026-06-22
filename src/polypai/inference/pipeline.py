@@ -10,8 +10,8 @@ shape/flow testing; with trained weights it is the deployable inference entry.
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable, Optional
 
 import numpy as np
 
@@ -29,7 +29,7 @@ class PipelineConfig:
     image_size: int = 512
     score_thresh: float = 0.3
     nms_iou: float = 0.5
-    mm_per_pixel: Optional[float] = None     # scope calibration; None -> relative size only
+    mm_per_pixel: float | None = None     # scope calibration; None -> relative size only
     device: str = "cuda"
     selector: SelectorConfig = field(default_factory=lambda: SelectorConfig(top_k=12, n_views=5))
 

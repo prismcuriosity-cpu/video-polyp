@@ -5,6 +5,6 @@ from __future__ import annotations
 
 from polypai.engine.criterion import UnifiedCriterion
 from polypai.engine.evaluator import Evaluator
-from polypai.engine.trainer import Trainer, TrainConfig
+from polypai.engine.trainer import TrainConfig, Trainer
 
 __all__ = ["UnifiedCriterion", "Trainer", "TrainConfig", "Evaluator"]

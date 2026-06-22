@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass
@@ -12,11 +11,11 @@ class LesionFinding:
     bbox: list[float]                       # xyxy in the selected frame
     detection_confidence: float
     mask_area_px: int = 0
-    size_mm: Optional[float] = None         # absolute estimate if calibration provided
+    size_mm: float | None = None         # absolute estimate if calibration provided
     size_relative: float = 0.0              # bbox-diagonal / frame-diagonal
-    paris: Optional[str] = None
-    nice: Optional[str] = None
-    kudo: Optional[str] = None
+    paris: str | None = None
+    nice: str | None = None
+    kudo: str | None = None
     malignancy_prob: float = 0.0
     uncertainty: float = 0.0
     explanation: dict = field(default_factory=dict)

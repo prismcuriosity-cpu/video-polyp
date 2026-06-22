@@ -7,7 +7,7 @@ with ``boxes`` (N,4 xyxy), ``scores`` (N,), and optionally ``masks`` (N,H,W).
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 

@@ -5,8 +5,8 @@ import pytest
 
 torch = pytest.importorskip("torch")
 
-from polypai.inference import ClinicalPipeline, PipelineConfig, decode_detections, nms  # noqa: E402
 from polypai.frame_selection import SelectorConfig  # noqa: E402
+from polypai.inference import ClinicalPipeline, PipelineConfig, decode_detections, nms  # noqa: E402
 from polypai.models import ModelConfig, build_model  # noqa: E402
 
 RNG = np.random.default_rng(3)

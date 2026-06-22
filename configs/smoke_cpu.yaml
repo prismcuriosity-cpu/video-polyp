@@ -1,0 +1,31 @@
+# Tiny CPU smoke config: validates the train/eval wiring without a GPU or data.
+# Point `data.datasets` at a small local folder of image/mask pairs to actually
+# step the optimiser.
+
+model:
+  stem_channels: 16
+  stage_channels: [24, 32, 48, 64]
+  stage_depths: [1, 1, 1, 1]
+  fpn_channels: 32
+  seg_decoder_channels: 32
+  gradient_checkpointing: false
+
+data:
+  datasets:
+    kvasir_seg: data/Kvasir-SEG
+  image_size: 128
+  batch_size: 2
+  num_workers: 0
+  pin_memory: false
+  persistent_workers: false
+
+train:
+  epochs: 1
+  lr: 0.0005
+  warmup_steps: 5
+  amp_dtype: "off"
+  channels_last: false
+  compile: false
+  device: cpu
+  ckpt_dir: checkpoints/smoke
+  log_interval: 1

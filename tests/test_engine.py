@@ -4,7 +4,7 @@ import pytest
 
 torch = pytest.importorskip("torch")
 
-from polypai.engine import Evaluator, Trainer, TrainConfig, UnifiedCriterion  # noqa: E402
+from polypai.engine import Evaluator, TrainConfig, Trainer, UnifiedCriterion  # noqa: E402
 from polypai.engine.fcos_target import assign_image  # noqa: E402
 from polypai.models import ModelConfig, build_model  # noqa: E402
 

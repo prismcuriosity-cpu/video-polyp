@@ -14,7 +14,8 @@ and lets the diagnostic scorer/temporal NMS prune), matching the brief's
 
 from __future__ import annotations
 
-from typing import Callable, Protocol, runtime_checkable
+from collections.abc import Callable
+from typing import Protocol, runtime_checkable
 
 import numpy as np
 

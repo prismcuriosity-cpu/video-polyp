@@ -46,7 +46,7 @@ class TemperatureScaler(nn.Module):
     def forward(self, logits: torch.Tensor) -> torch.Tensor:
         return logits / self.log_t.exp()
 
-    def fit(self, logits: torch.Tensor, labels: torch.Tensor, max_iter: int = 100) -> "TemperatureScaler":
+    def fit(self, logits: torch.Tensor, labels: torch.Tensor, max_iter: int = 100) -> TemperatureScaler:
         opt = torch.optim.LBFGS([self.log_t], lr=0.05, max_iter=max_iter)
 
         def closure():

@@ -10,7 +10,7 @@ from __future__ import annotations
 import dataclasses
 import warnings
 from pathlib import Path
-from typing import Any, Type, TypeVar
+from typing import Any, TypeVar
 
 T = TypeVar("T")
 
@@ -22,7 +22,7 @@ def load_yaml(path: str | Path) -> dict:
         return yaml.safe_load(f) or {}
 
 
-def from_dict(cls: Type[T], d: dict | None) -> T:
+def from_dict(cls: type[T], d: dict | None) -> T:
     """Instantiate a dataclass from a dict, ignoring (and warning on) extra keys."""
     if d is None:
         return cls()  # type: ignore[call-arg]

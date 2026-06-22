@@ -37,7 +37,7 @@ class DiagnosticScoreWeights:
     epsilon: float = 0.10  # B  - boundary completeness
     zeta: float = 0.05    # Vasc - vascular-pattern visibility (extension)
 
-    def normalised(self) -> "DiagnosticScoreWeights":
+    def normalised(self) -> DiagnosticScoreWeights:
         vals = np.array([self.alpha, self.beta, self.gamma, self.delta, self.epsilon, self.zeta])
         s = vals.sum()
         if s <= 0:

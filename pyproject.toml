@@ -74,7 +74,15 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B"]
-ignore = ["E501"]  # line length handled by formatter / long medical formulae
+# Pragmatic ignores for a numeric/ML codebase:
+#   E501  line length (long medical formulae / docstrings)
+#   E741  "ambiguous" names l/I/O are meaningful here (FPN level `l`, Kudo `I`)
+#   E702  intentional semicolons in compact numeric blocks
+#   B905  zip(strict=) not needed for known-equal-length pyramid iterables
+#   B007  unused loop indices in clear enumerate() loops
+#   B008  np.arange default arg in metric signatures (immutable, intentional)
+#   B028  warnings without stacklevel
+ignore = ["E501", "E741", "E702", "B905", "B007", "B008", "B028"]
 
 [tool.mypy]
 python_version = "3.10"

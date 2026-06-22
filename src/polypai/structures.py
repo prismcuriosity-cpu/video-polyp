@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
 
 import numpy as np
 
@@ -76,7 +75,7 @@ class BBox:
     def cy(self) -> float:
         return 0.5 * (self.y1 + self.y2)
 
-    def clip(self, w: int, h: int) -> "BBox":
+    def clip(self, w: int, h: int) -> BBox:
         return BBox(
             x1=float(np.clip(self.x1, 0, w)),
             y1=float(np.clip(self.y1, 0, h)),
@@ -86,7 +85,7 @@ class BBox:
             label=self.label,
         )
 
-    def iou(self, other: "BBox") -> float:
+    def iou(self, other: BBox) -> float:
         ix1, iy1 = max(self.x1, other.x1), max(self.y1, other.y1)
         ix2, iy2 = min(self.x2, other.x2), min(self.y2, other.y2)
         iw, ih = max(0.0, ix2 - ix1), max(0.0, iy2 - iy1)
@@ -101,8 +100,8 @@ class PolypCandidate:
 
     bbox: BBox
     presence: float                         # P: confidence a polyp is present [0, 1]
-    mask: Optional[np.ndarray] = None       # optional binary ROI mask, HxW {0,1}
-    embedding: Optional[np.ndarray] = None  # appearance embedding for dedup/multi-view
+    mask: np.ndarray | None = None       # optional binary ROI mask, HxW {0,1}
+    embedding: np.ndarray | None = None  # appearance embedding for dedup/multi-view
 
 
 @dataclass
@@ -115,7 +114,7 @@ class QualityBreakdown:
     exposure: float = 0.0           # 1 - over/under-exposure fraction
     noise_free: float = 0.0         # inverse sensor-noise estimate
 
-    def aggregate(self, weights: Optional[dict] = None) -> float:
+    def aggregate(self, weights: dict | None = None) -> float:
         w = weights or {
             "sharpness": 0.30,
             "contrast": 0.20,
@@ -139,10 +138,10 @@ class FrameScore:
     boundary: float = 0.0          # B (boundary completeness)
     vascular: float = 0.0          # extra: vascular-pattern visibility
     total: float = 0.0             # S = weighted combination
-    candidate: Optional[PolypCandidate] = None
-    quality_breakdown: Optional[QualityBreakdown] = None
-    view_descriptor: Optional[np.ndarray] = None
-    phash: Optional[int] = None
+    candidate: PolypCandidate | None = None
+    quality_breakdown: QualityBreakdown | None = None
+    view_descriptor: np.ndarray | None = None
+    phash: int | None = None
 
     def as_dict(self) -> dict:
         return {

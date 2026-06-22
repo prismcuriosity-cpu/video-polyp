@@ -8,7 +8,7 @@ narrative in the clinical report.
 
 from __future__ import annotations
 
-from polypai.explain.calibration import expected_calibration_error, TemperatureScaler
+from polypai.explain.calibration import TemperatureScaler, expected_calibration_error
 from polypai.explain.gradcam import GradCAM, GradCAMpp, overlay_heatmap
 from polypai.explain.uncertainty import predictive_entropy, segmentation_uncertainty
 

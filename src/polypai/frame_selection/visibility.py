@@ -111,7 +111,6 @@ def boundary_completeness_score(
         return float(np.clip(0.6 * inside + 0.4 * crisp, 0.0, 1.0))
 
     # Box-only fallback: distance to border + edge energy on the box ring.
-    m = 0.01 * max(h, w)
     margins = [box.x1 - 0, box.y1 - 0, (w - box.x2), (h - box.y2)]
     inside = float(np.clip(min(margins) / (0.1 * max(h, w) + 1e-6), 0.0, 1.0))
     x1, y1 = int(np.clip(box.x1, 0, w - 1)), int(np.clip(box.y1, 0, h - 1))
