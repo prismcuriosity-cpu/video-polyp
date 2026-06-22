@@ -1,0 +1,54 @@
+# Reference experiment tuned for a single RTX 5090 (32 GB system RAM, 1 TB SSD).
+# See docs/HARDWARE_OPTIMIZATION.md for the reasoning behind these values.
+
+model:
+  in_channels: 3
+  stem_channels: 48
+  stage_channels: [80, 160, 320, 640]   # ~strong backbone; scale with width_mult
+  stage_depths: [3, 4, 9, 3]            # ConvNeXt-ish depth distribution
+  width_mult: 1.0
+  use_cbam: true
+  gradient_checkpointing: true          # trade compute for memory headroom
+  fpn_channels: 256
+  extra_p2: true                        # high-res level for 2 mm lesions
+  det_classes: 1
+  det_head_convs: 4
+  seg_classes: 2
+  seg_decoder_channels: 192
+  cls_heads:
+    paris: 6
+    nice: 3
+    kudo: 7
+    malignancy: 2
+  enable_uncertainty: true
+
+data:
+  datasets:
+    # Replace these with your local roots; placeholders resolve to 0 samples
+    # with a warning until the data is present (see docs/DATASETS.md).
+    kvasir_seg: data/Kvasir-SEG
+    piccolo: data/PICCOLO
+    # cvc_clinicdb: data/CVC-ClinicDB
+    # cvc_colondb: data/CVC-ColonDB
+    # hyperkvasir_seg: data/HyperKvasir
+  image_size: 512
+  batch_size: 12          # ~fits 32 GB VRAM at 512px with grad checkpointing + AMP
+  num_workers: 12
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 4
+
+train:
+  epochs: 120
+  lr: 0.0003
+  weight_decay: 0.05
+  warmup_steps: 1000
+  grad_accum: 2           # effective batch 24
+  max_grad_norm: 5.0
+  amp_dtype: bf16         # BF16 has the dynamic range to skip the grad scaler
+  ema_decay: 0.9995
+  channels_last: true
+  compile: true           # torch.compile for fused kernels on Ada/Blackwell
+  device: cuda
+  ckpt_dir: checkpoints/rtx5090
+  log_interval: 20
