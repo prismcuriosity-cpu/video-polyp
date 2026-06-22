@@ -29,7 +29,8 @@ jobs:
       - name: Install dependencies (CPU)
         run: |
           python -m pip install --upgrade pip
-          pip install numpy pyyaml scipy scikit-image opencv-python-headless einops onnx pytest ruff
+          # ruff pinned for reproducible lint (avoid new-rule drift breaking CI)
+          pip install numpy pyyaml scipy scikit-image opencv-python-headless einops onnx pytest "ruff==0.15.8"
           pip install torch --index-url https://download.pytorch.org/whl/cpu
 
       - name: Lint (ruff)

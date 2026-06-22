@@ -8,9 +8,9 @@ no Paris/NICE labels), and the training code masks missing targets per task.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, Optional
 
 # task label keys a dataset may provide
 LABEL_KEYS = ("paris", "nice", "kudo", "malignancy")
@@ -19,8 +19,8 @@ LABEL_KEYS = ("paris", "nice", "kudo", "malignancy")
 @dataclass
 class Sample:
     image_path: str
-    mask_path: Optional[str] = None
-    boxes: Optional[list] = None                    # [[x1,y1,x2,y2], ...] if provided
+    mask_path: str | None = None
+    boxes: list | None = None                    # [[x1,y1,x2,y2], ...] if provided
     labels: dict = field(default_factory=dict)      # subset of LABEL_KEYS -> int
     dataset: str = ""
     meta: dict = field(default_factory=dict)

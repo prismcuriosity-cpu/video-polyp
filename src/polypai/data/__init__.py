@@ -9,6 +9,8 @@ ones by editing a single path in ``configs/data`` — no code change.  The sampl
 
 from __future__ import annotations
 
+# import side-effect: populate the registry
+from polypai.data import sources as _sources  # noqa: E402,F401
 from polypai.data.registry import (
     DATASET_REGISTRY,
     DatasetSpec,
@@ -16,9 +18,6 @@ from polypai.data.registry import (
     register_dataset,
     resolve_samples,
 )
-
-# import side-effect: populate the registry
-from polypai.data import sources as _sources  # noqa: E402,F401
 
 __all__ = [
     "DATASET_REGISTRY",

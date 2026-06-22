@@ -15,7 +15,7 @@ _MEAN = np.array([0.485, 0.456, 0.406], np.float32)
 _STD = np.array([0.229, 0.224, 0.225], np.float32)
 
 try:
-    import albumentations as A  # type: ignore
+    import albumentations  # noqa: F401  (availability probe; imported lazily in _build_alb)
 
     _HAS_ALB = True
 except Exception:  # pragma: no cover
