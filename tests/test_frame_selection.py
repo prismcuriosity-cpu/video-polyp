@@ -169,11 +169,18 @@ def test_saliency_detector_finds_blob():
 
 
 def test_saliency_detector_rejects_flat():
-    flat = np.full((120, 120, 3), 0.4, dtype=np.float32) + RNG.normal(0, 0.005, (120, 120, 3)).astype(
+    # deterministic (independent of module-level RNG state): a near-flat frame has
+    # no spatially-coherent salient region, so no candidate should be proposed.
+    rng = np.random.default_rng(123)
+    flat = np.full((120, 120, 3), 0.4, dtype=np.float32) + rng.normal(0, 0.01, (120, 120, 3)).astype(
         np.float32
     )
     det = SaliencyCandidateDetector(thr_k=2.0)
     assert det.detect(np.clip(flat, 0, 1)) == []
+
+
+def test_saliency_detector_rejects_constant():
+    assert SaliencyCandidateDetector().detect(np.full((100, 100, 3), 0.5, np.float32)) == []
 
 
 # --------------------------------------------------------------------------- #
